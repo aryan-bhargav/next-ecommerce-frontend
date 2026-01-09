@@ -41,31 +41,49 @@ const Category: React.FC = () => {
     <div className="w-full flex justify-center mt-2 px-2">
       <div className="flex gap-2 max-w-7xl w-full justify-start flex-wrap">
         {categories.map((cat, i) => (
-          <button
-            key={i}
-            onClick={() => handleClick(cat.title)}
-            className="
-              w-24 h-20
-              rounded-xl
-              bg-white/30 dark:bg-zinc-900/50
-              backdrop-blur-lg
-              border border-white/30 dark:border-zinc-800/60
-              shadow-sm
-              flex flex-col items-center justify-center
-              cursor-pointer
-              hover:bg-white/40 dark:hover:bg-zinc-800/60
-              transition
-              focus:outline-none
-            "
-          >
-            <Image
-              src={cat.image || DEFAULT_IMAGE}
-              alt={cat.title}
-              width={70}
-              height={70}
-              className="object-contain mb-1"
-            />
-          </button>
+          <div key={i} className="w-24 flex flex-col items-center">
+            <button
+              onClick={() => handleClick(cat.title)}
+              className="
+      w-24 h-20
+      rounded-xl
+      bg-white/30 dark:bg-zinc-900/50
+      backdrop-blur-lg
+      border border-white/30 dark:border-zinc-800/60
+      shadow-sm
+      flex flex-col items-center justify-center
+      cursor-pointer
+      hover:bg-white/40 dark:hover:bg-zinc-800/60
+      transition
+      focus:outline-none
+    "
+            >
+              <Image
+                src={cat.image || DEFAULT_IMAGE}
+                alt={cat.title}
+                width={48}
+                height={48}
+                className="object-contain"
+              />
+            </button>
+
+            {/* ✅ FIXED TEXT */}
+            <span
+              className="
+      mt-1
+      text-xs
+      text-center
+      leading-tight
+      max-w-full
+      line-clamp-2
+      break-words
+    "
+              title={cat.title}
+            >
+              {cat.title}
+            </span>
+          </div>
+
         ))}
       </div>
     </div>
