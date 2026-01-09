@@ -730,7 +730,7 @@ const products = [
             "value": 40
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Home Furnishing",
             "Bedding"
         ],
@@ -782,7 +782,7 @@ const products = [
             "value": 38
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Home Decor",
             "Lights"
         ],
@@ -834,7 +834,7 @@ const products = [
             "value": 17
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Pet Care",
             "Dogs"
         ],
@@ -886,7 +886,7 @@ const products = [
             "value": 32
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Home Decor",
             "Lights"
         ],
@@ -907,8 +907,7 @@ const products = [
             "value": 17
         },
         "categories": [
-            "groceries",
-            "School, Office & Stationery",
+            "school-office-stationery",
             "Notebooks & Paper Products"
         ],
         "categoryIds": [
@@ -1121,7 +1120,7 @@ const products = [
             "value": 33
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Kitchenware",
             "Cookware"
         ],
@@ -1260,7 +1259,7 @@ const products = [
             "value": 25
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Kitchenware",
             "Flask, Bottle & Tiffin Boxes"
         ],
@@ -1323,7 +1322,7 @@ const products = [
             "value": 42
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Home Furnishing",
             "Cushions & Cushion Covers"
         ],
@@ -1428,7 +1427,7 @@ const products = [
             "value": 33
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Kitchenware",
             "Containers & Storage"
         ],
@@ -1658,7 +1657,7 @@ const products = [
             "value": 40
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Home Furnishing",
             "Bathroom Linen"
         ],
@@ -1742,7 +1741,7 @@ const products = [
             "value": 21
         },
         "categories": [
-            "industrial_professional",
+            "industrial-professional-supplies",
             "Building Supplies & Tools"
         ],
         "categoryIds": [
@@ -1782,7 +1781,7 @@ const products = [
             "value": 30
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Toys & Games",
             "Indoor & Board Games"
         ],
@@ -1803,7 +1802,7 @@ const products = [
             "value": 45
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Home Decor",
             "Lights"
         ],
@@ -2115,7 +2114,7 @@ const products = [
             "value": 50
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Home Furnishing",
             "Bedding"
         ],
@@ -2241,7 +2240,7 @@ const products = [
             "value": 29
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Tableware",
             "Dining"
         ],
@@ -2611,7 +2610,7 @@ const products = [
             "value": 50
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Home Decor",
             "Lights"
         ],
@@ -2695,7 +2694,7 @@ const products = [
             "value": 32
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Kitchenware",
             "Flask, Bottle & Tiffin Boxes"
         ],
@@ -2800,7 +2799,7 @@ const products = [
             "value": 25
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Kitchenware",
             "Flask, Bottle & Tiffin Boxes"
         ],
@@ -3029,7 +3028,7 @@ const products = [
             "value": 50
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Home Furnishing",
             "Bedding"
         ],
@@ -3113,7 +3112,7 @@ const products = [
             "value": 31
         },
         "categories": [
-            "industrial_professional",
+            "industrial-professional-supplies",
             "Industrial Supplies",
             "Power & Hand Tools"
         ],
@@ -3155,7 +3154,7 @@ const products = [
             "value": 29
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Toys & Games",
             "Learning & Education"
         ],
@@ -3176,7 +3175,7 @@ const products = [
             "value": 40
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Home Decor",
             "Lights"
         ],
@@ -3260,7 +3259,7 @@ const products = [
             "value": 35
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Home Furnishing",
             "Bedding"
         ],
@@ -3476,7 +3475,7 @@ const products = [
             "value": 40
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Home Furnishing",
             "Bathroom Linen"
         ],
@@ -3560,7 +3559,7 @@ const products = [
             "value": 33
         },
         "categories": [
-            "industrial_professional",
+            "industrial-professional-supplies",
             "Industrial Supplies",
             "Power & Hand Tools"
         ],
@@ -3581,7 +3580,7 @@ const products = [
             "value": 25
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Toys & Games",
             "Learning & Education"
         ],
@@ -3602,7 +3601,7 @@ const products = [
             "value": 50
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Home Decor",
             "Lights"
         ],
@@ -3707,7 +3706,7 @@ const products = [
             "value": 33
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Kitchenware",
             "Flask, Bottle & Tiffin Boxes"
         ],
@@ -3728,7 +3727,7 @@ const products = [
             "value": 26
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Prayer & Spiritual Needs",
             "Agarbatti"
         ],
@@ -3864,8 +3863,7 @@ const products = [
             "value": 18
         },
         "categories": [
-            "groceries",
-            "School, Office & Stationery",
+            "school-office-stationery",
             "Writing Instruments & Accessories"
         ],
         "categoryIds": [
@@ -3906,7 +3904,7 @@ const products = [
             "value": 40
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Home Furnishing",
             "Bedding"
         ],
@@ -3990,7 +3988,7 @@ const products = [
             "value": 24
         },
         "categories": [
-            "industrial_professional",
+            "industrial-professional-supplies",
             "Building Supplies & Tools"
         ],
         "categoryIds": [
@@ -4030,7 +4028,7 @@ const products = [
             "value": 29
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Toys & Games",
             "Toy Vehicles & Ride-Ons"
         ],
@@ -4135,7 +4133,7 @@ const products = [
             "value": 38
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Home Furnishing",
             "Bedding"
         ],
@@ -4156,7 +4154,7 @@ const products = [
             "value": 26
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Prayer & Spiritual Needs",
             "Dhoop"
         ],
@@ -4324,7 +4322,7 @@ const products = [
             "value": 40
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Home Furnishing",
             "Bathroom Linen"
         ],
@@ -4408,8 +4406,7 @@ const products = [
             "value": 25
         },
         "categories": [
-            "groceries",
-            "School, Office & Stationery",
+            "school-office-stationery",
             "Notebooks & Paper Products"
         ],
         "categoryIds": [
@@ -4450,7 +4447,7 @@ const products = [
             "value": 33
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Tableware",
             "Dining"
         ],
@@ -4555,7 +4552,7 @@ const products = [
             "value": 33
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Kitchenware",
             "Flask, Bottle & Tiffin Boxes"
         ],
@@ -4597,7 +4594,7 @@ const products = [
             "value": 31
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Kitchenware",
             "Flask, Bottle & Tiffin Boxes"
         ],
@@ -4618,7 +4615,7 @@ const products = [
             "value": 25
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Pet Care",
             "Dogs"
         ],
@@ -4639,8 +4636,7 @@ const products = [
             "value": 26
         },
         "categories": [
-            "groceries",
-            "School, Office & Stationery",
+            "school-office-stationery",
             "Notebooks & Paper Products"
         ],
         "categoryIds": [
@@ -4723,7 +4719,7 @@ const products = [
             "value": 28
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Kitchenware",
             "Cookers & Steamers"
         ],
@@ -4765,7 +4761,7 @@ const products = [
             "value": 50
         },
         "categories": [
-            "home_lifestyle",
+            "home-lifestyle",
             "Home Furnishing",
             "Bedding"
         ],

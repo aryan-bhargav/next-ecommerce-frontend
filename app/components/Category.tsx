@@ -7,36 +7,23 @@ import { useRouter } from "next/navigation";
 interface CategoryItem {
   title: string;
   image?: string;
-  path: string[];
 }
 
 const DEFAULT_IMAGE = "/images/default-category.png";
 
 const categories: CategoryItem[] = [
+  { title: "Groceries", image: "/images/groceries.png" },
+  { title: "Fashion", image: "/images/fashion.png" },
+  { title: "Electronics", image: "/images/electronics.png" },
+  { title: "Home & Lifestyle", image: "/images/home-lifestyle.png" },
   {
-    title: "Electronics",
-    image: "/images/electronics.png",
-    path: ["electronics"],
+    title: "Industrial & Professional Supplies",
+    image: "/images/industrial.png",
   },
+  { title: "Furniture", image: "/images/furniture.png" },
   {
-    title: "Mobiles",
-    image: "/images/mobiles.png",
-    path: ["electronics", "mobiles"],
-  },
-  {
-    title: "Men",
-    image: "/images/men-fashion.png",
-    path: ["fashion", "men"],
-  },
-  {
-    title: "Women",
-    image: "/images/women-fashion.png",
-    path: ["fashion", "women"],
-  },
-  {
-    title: "Home",
-    image: "/images/home.png",
-    path: ["home"],
+    title: "School, Office & Stationery",
+    image: "/images/school-office.png",
   },
 ];
 
@@ -47,8 +34,7 @@ const Category: React.FC = () => {
   const router = useRouter();
 
   const handleClick = (title: string) => {
-    const slug = toSlug(title);
-    router.push(`/c/${slug}`);
+    router.push(`/c/${toSlug(title)}`);
   };
 
   return (
@@ -83,7 +69,7 @@ const Category: React.FC = () => {
               }}
             />
 
-            <div className="text-[11px] font-medium text-zinc-900 dark:text-zinc-100 text-center">
+            <div className="text-[11px] font-medium text-zinc-900 dark:text-zinc-100 text-center leading-tight px-1">
               {cat.title}
             </div>
           </button>
