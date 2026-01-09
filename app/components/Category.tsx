@@ -15,10 +15,10 @@ const categories: CategoryItem[] = [
   { title: "Groceries", image: "/images/groceries.png" },
   { title: "Fashion", image: "/images/fashion.png" },
   { title: "Electronics", image: "/images/electronics.png" },
-  { title: "Home & Lifestyle", image: "/images/home-lifestyle.png" },
+  { title: "Home & Lifestyle", image: "/images/home_&_lifestyle.png" },
   {
     title: "Industrial & Professional Supplies",
-    image: "/images/industrial.png",
+    image: "/images/Industrial_&_Professional_Supplies.png",
   },
   { title: "Furniture", image: "/images/furniture.png" },
   {
@@ -61,17 +61,10 @@ const Category: React.FC = () => {
             <Image
               src={cat.image || DEFAULT_IMAGE}
               alt={cat.title}
-              width={28}
-              height={28}
+              width={70}
+              height={70}
               className="object-contain mb-1"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = DEFAULT_IMAGE;
-              }}
             />
-
-            <div className="text-[11px] font-medium text-zinc-900 dark:text-zinc-100 text-center leading-tight px-1">
-              {cat.title}
-            </div>
           </button>
         ))}
       </div>
