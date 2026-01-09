@@ -20,12 +20,12 @@ export default async function CategoryLayout({ children, params }: Props) {
         max-w-7xl mx-auto px-4 py-4
         text-gray-950 dark:text-zinc-100
       "
-    >
+    >{children}
       <div className="grid grid-cols-12 gap-6">
 
         {/* LEFT SIDEBAR */}
         <aside
-          className="
+          className=" my-5
             col-span-12 md:col-span-3
             rounded-2xl
             bg-white/40 dark:bg-zinc-900/60
@@ -35,7 +35,7 @@ export default async function CategoryLayout({ children, params }: Props) {
             p-4
           "
         >
-          {children}
+          
         </aside>
 
         {/* RIGHT CONTENT */}
