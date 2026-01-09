@@ -22,12 +22,10 @@ export default function Navbar() {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  /* ---------- AUTO FOCUS ---------- */
   useEffect(() => {
     if (showInput) inputRef.current?.focus();
   }, [showInput]);
 
-  /* ---------- LOAD CACHE / AUTO ---------- */
   useEffect(() => {
     const cached = localStorage.getItem(CACHE_KEY);
     if (cached) {
@@ -40,7 +38,6 @@ export default function Navbar() {
     detectViaGPS();
   }, []);
 
-  /* ---------- GPS → PINCODE ---------- */
   function detectViaGPS() {
     if (!navigator.geolocation) return;
 
@@ -53,14 +50,13 @@ export default function Navbar() {
           const data = await res.json();
           const pin = data.address?.postcode;
           if (pin) resolveFromPincode(pin);
-        } catch { }
+        } catch {}
       },
-      () => { },
+      () => {},
       { enableHighAccuracy: true }
     );
   }
 
-  /* ---------- PINCODE → CITY ---------- */
   async function resolveFromPincode(pin: string) {
     try {
       const res = await fetch(`https://api.postalpincode.in/pincode/${pin}`);
@@ -96,55 +92,60 @@ export default function Navbar() {
   return (
     <header className="w-full">
 
-      {/* ================= FIRST BAR — UNTOUCHED ================= */}
-      <div className="sticky top-0 z-50
-        bg-[#0c5f84]/40 backdrop-blur-2xl
-        border-b border-white/20
-        shadow-[0_8px_32px_rgba(31,38,135,0.37)]
-        text-white
-      ">
+      {/* ================= FIRST BAR ================= */}
+      <div
+        className="
+          sticky top-0 z-50
+          bg-[#0c5f84]/40 dark:bg-zinc-950/70
+          backdrop-blur-2xl
+          border-b border-white/20 dark:border-zinc-800/60
+          shadow-[0_8px_32px_rgba(31,38,135,0.37)]
+          dark:shadow-[0_8px_32px_rgba(0,0,0,0.6)]
+          text-white
+        "
+      >
         <div className="max-w-7xl mx-auto flex items-center gap-4 px-4 py-3">
 
           <Link href="/" className="flex items-center gap-2 font-bold text-xl">
-            <span className="px-2 py-1 rounded">
-              <img width="100" src="/Logo.png" alt="" />
-            </span>
+            <img width="100" src="/Logo.png" alt="Logo" />
           </Link>
 
-          <div className="hidden md:flex justify-between rounded-full
-            bg-white/20 backdrop-blur-xl
-            border border-white/30
-            ring-1 ring-white/50
-            shadow-[0_8px_32px_rgba(31,38,135,0.37)]
-            relative overflow-hidden
-          ">
-            <span className="pointer-events-none absolute inset-0 rounded-full
-              bg-gradient-to-br from-white/50 via-white/10 to-transparent
-              opacity-60
-            " />
-
-            <button className="relative bg-white/80 px-12 py-1 m-2
-              font-black rounded-2xl text-black shadow">
+          <div
+            className="
+              hidden md:flex justify-between rounded-full
+              bg-white/20 dark:bg-zinc-900/60
+              backdrop-blur-xl
+              border border-white/30 dark:border-zinc-800/60
+              ring-1 ring-white/50 dark:ring-zinc-700/60
+              shadow-lg
+              relative overflow-hidden
+            "
+          >
+            <button className="bg-white/80 px-12 py-1 m-2 font-black rounded-2xl text-black shadow">
               Quick
             </button>
-
-            <button className="relative px-12 py-1 m-2
-              font-black rounded-2xl text-white/90">
+            <button className="px-12 py-1 m-2 font-black rounded-2xl text-white/90">
               Scheduled
             </button>
           </div>
 
-          <div className="flex flex-1 items-center rounded-full px-4 py-2
-            bg-white/20 backdrop-blur-xl
-            border border-white/30
-            shadow-inner
-          ">
+          <div
+            className="
+              flex flex-1 items-center rounded-full px-4 py-2
+              bg-white/20 dark:bg-zinc-900/60
+              backdrop-blur-xl
+              border border-white/30 dark:border-zinc-800/60
+            "
+          >
             <Search size={18} className="text-white/80" />
             <input
               type="search"
               placeholder="Search in Quick"
-              className="bg-transparent ml-2 w-full outline-none
-              placeholder:text-white/70 text-white"
+              className="
+                bg-transparent ml-2 w-full outline-none
+                placeholder:text-white/70
+                text-white
+              "
             />
           </div>
 
@@ -160,10 +161,10 @@ export default function Navbar() {
       </div>
 
       {/* ================= SECOND BAR ================= */}
-      <div className="bg-[#083f57]/40 backdrop-blur-xl text-white">
+      <div className="bg-[#083f57]/40 dark:bg-zinc-900/70 backdrop-blur-xl text-white">
         <div className="max-w-7xl mx-auto flex items-center gap-3 px-4 py-2 text-sm">
 
-          <span className="bg-white/80 text-[#0c5f84] px-3 py-1 rounded-full font-semibold">
+          <span className="bg-white/80 dark:bg-white text-[#0c5f84] px-3 py-1 rounded-full font-semibold">
             Delivery in 10 to 30 mins
           </span>
 
@@ -180,12 +181,15 @@ export default function Navbar() {
               Change
             </button>
           ) : (
-            <div className="flex items-center gap-2
-  bg-white/20 backdrop-blur-xl
-  border border-white/30
-  rounded-full px-3 py-1">
-
-
+            <div
+              className="
+                flex items-center gap-2
+                bg-white/20 dark:bg-zinc-800/60
+                backdrop-blur-xl
+                border border-white/30 dark:border-zinc-700/60
+                rounded-full px-3 py-1
+              "
+            >
               <input
                 ref={inputRef}
                 value={pincode}
@@ -195,25 +199,28 @@ export default function Navbar() {
                 onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
                 maxLength={6}
                 placeholder="Enter pincode"
-                className="bg-transparent outline-none text-white
-                placeholder:text-white/70 w-32 text-sm"
+                className="
+                  bg-transparent outline-none text-white
+                  placeholder:text-white/70 w-32 text-sm
+                "
               />
 
               <button
                 onClick={handleSubmit}
                 disabled={pincode.length !== 6}
                 className={`px-3 py-1 rounded-full text-xs font-semibold
-                  ${pincode.length === 6
-                    ? "bg-white/80 text-[#0c5f84]"
-                    : "bg-white/30 text-white/50 cursor-not-allowed"
-                  }`}
+                  ${
+                    pincode.length === 6
+                      ? "bg-white/80 text-[#0c5f84]"
+                      : "bg-white/30 text-white/50 cursor-not-allowed"
+                  }
+                `}
               >
                 Apply
               </button>
 
               <button
                 onClick={detectViaGPS}
-                title="Detect location"
                 className="text-white/80 hover:text-white"
               >
                 <Crosshair size={16} />

@@ -18,15 +18,29 @@ const BASE_PATH = "/c"
 
 const BreadCrumb = ({ categoryPath }: BreadCrumbProps) => {
   return (
-    <div className="w-fit rounded-xl border border-white/20 bg-white/10 backdrop-blur-md px-4 py-2 shadow-lg">
+    <div
+      className="
+        w-fit rounded-xl
+        border border-zinc-200/50 dark:border-zinc-800/60
+        bg-white/70 dark:bg-zinc-900/60
+        backdrop-blur-md
+        px-4 py-2
+        shadow-lg
+      "
+    >
       <Breadcrumb>
-        <BreadcrumbList className="text-sm text-muted-foreground">
+        <BreadcrumbList className="text-sm text-zinc-600 dark:text-zinc-400">
           {/* Home */}
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
               <Link
                 href="/"
-                className="font-medium text-foreground hover:text-primary transition"
+                className="
+                  font-medium
+                  text-zinc-900 dark:text-zinc-100
+                  hover:text-primary
+                  transition-colors
+                "
               >
                 Home
               </Link>
@@ -42,19 +56,29 @@ const BreadCrumb = ({ categoryPath }: BreadCrumbProps) => {
             return (
               <React.Fragment key={index}>
                 <BreadcrumbSeparator>
-                  <ChevronRight className="h-4 w-4 opacity-60" />
+                  <ChevronRight className="h-4 w-4 opacity-60 dark:opacity-50" />
                 </BreadcrumbSeparator>
 
                 <BreadcrumbItem>
                   {isLast ? (
-                    <BreadcrumbPage className="font-semibold text-foreground capitalize">
+                    <BreadcrumbPage
+                      className="
+                        font-semibold capitalize
+                        text-zinc-900 dark:text-zinc-100
+                      "
+                    >
                       {category}
                     </BreadcrumbPage>
                   ) : (
                     <BreadcrumbLink asChild>
                       <Link
                         href={href}
-                        className="capitalize hover:text-primary transition"
+                        className="
+                          capitalize
+                          text-zinc-700 dark:text-zinc-300
+                          hover:text-primary
+                          transition-colors
+                        "
                       >
                         {category}
                       </Link>

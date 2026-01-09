@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const slides = [
@@ -8,36 +9,36 @@ const slides = [
     title: "Mattress",
     price: "From ₹2,999",
     subtitle: "Wakefit, Sleepwell & more",
-    image: "./images/1.png",
-    gradient: ["#3b82f6", "#1e40af"], // blue
+    image: "/images/1.png",
+    gradient: ["#3b82f6", "#1e40af"],
   },
   {
     title: "Sofas",
     price: "From ₹5,999",
     subtitle: "Modern & Comfort Living",
-    image: "./images/2.png",
-    gradient: ["#6366f1", "#4338ca"], // indigo
+    image: "/images/2.png",
+    gradient: ["#6366f1", "#4338ca"],
   },
   {
     title: "Refrigerators",
     price: "From ₹9,999",
     subtitle: "LG, Samsung & more",
-    image: "./images/3.png",
-    gradient: ["#06b6d4", "#0e7490"], // cyan
+    image: "/images/3.png",
+    gradient: ["#06b6d4", "#0e7490"],
   },
   {
     title: "Washing Machines",
     price: "From ₹12,499",
     subtitle: "Top & Front Load",
-    image: "./images/4.png",
-    gradient: ["#0ea5e9", "#075985"], // sky
+    image: "/images/4.png",
+    gradient: ["#0ea5e9", "#075985"],
   },
   {
     title: "Smart TVs",
     price: "From ₹14,999",
     subtitle: "Sony, MI, Samsung",
-    image: "./images/5.png",
-    gradient: ["#2563eb", "#1e3a8a"], // deep blue
+    image: "/images/5.png",
+    gradient: ["#2563eb", "#1e3a8a"],
   },
 ];
 
@@ -58,7 +59,7 @@ export default function Carousel() {
         }}
       >
         {/* Glass Overlay */}
-        <div className="absolute inset-0 bg-white/10 backdrop-blur-xl" />
+        <div className="absolute inset-0 bg-white/10 dark:bg-black/20 backdrop-blur-xl" />
 
         {/* Shine */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-transparent opacity-40" />
@@ -67,17 +68,23 @@ export default function Carousel() {
         <div className="relative h-full flex items-center px-16">
 
           {/* Image Card */}
-          <div className="
-            w-48 h-48 rounded-2xl
-            bg-white/40 backdrop-blur-xl
-            border border-white/40
-            shadow-lg
-            flex items-center justify-center
-          ">
-            <img
+          <div
+            className="
+              w-48 h-48 rounded-2xl
+              bg-white/50 dark:bg-zinc-900/50
+              backdrop-blur-xl
+              border border-white/40 dark:border-zinc-800/60
+              shadow-lg
+              flex items-center justify-center
+            "
+          >
+            <Image
               src={slides[index].image}
               alt={slides[index].title}
-              className="h-40 object-contain rounded-xl"
+              width={160}
+              height={160}
+              className="object-contain"
+              priority
             />
           </div>
 
@@ -98,21 +105,33 @@ export default function Carousel() {
         {/* Left Arrow */}
         <button
           onClick={prev}
-          className="absolute left-4 top-1/2 -translate-y-1/2
-            w-10 h-10 rounded-full bg-white/80 backdrop-blur
-            flex items-center justify-center shadow"
+          className="
+            absolute left-4 top-1/2 -translate-y-1/2
+            w-10 h-10 rounded-full
+            bg-white/80 dark:bg-zinc-900/80
+            backdrop-blur
+            flex items-center justify-center
+            shadow
+            hover:scale-105 transition
+          "
         >
-          <ChevronLeft className="text-black" />
+          <ChevronLeft className="text-black dark:text-white" />
         </button>
 
         {/* Right Arrow */}
         <button
           onClick={next}
-          className="absolute right-4 top-1/2 -translate-y-1/2
-            w-10 h-10 rounded-full bg-white/80 backdrop-blur
-            flex items-center justify-center shadow"
+          className="
+            absolute right-4 top-1/2 -translate-y-1/2
+            w-10 h-10 rounded-full
+            bg-white/80 dark:bg-zinc-900/80
+            backdrop-blur
+            flex items-center justify-center
+            shadow
+            hover:scale-105 transition
+          "
         >
-          <ChevronRight className="text-black" />
+          <ChevronRight className="text-black dark:text-white" />
         </button>
 
         {/* Dots */}
@@ -121,7 +140,9 @@ export default function Carousel() {
             <span
               key={i}
               className={`h-2 rounded-full transition-all ${
-                i === index ? "w-6 bg-black" : "w-2 bg-white/60"
+                i === index
+                  ? "w-6 bg-black dark:bg-white"
+                  : "w-2 bg-white/60 dark:bg-white/40"
               }`}
             />
           ))}

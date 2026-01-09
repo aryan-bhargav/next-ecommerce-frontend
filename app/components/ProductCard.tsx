@@ -1,6 +1,7 @@
 "use client";
 
 import { Heart, Star, Truck, RefreshCcw } from "lucide-react";
+
 type Product = {
   _id: string;
   name: string;
@@ -41,33 +42,30 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <div
       className="
-        relative
-        h-[420px]
-        w-full
+        relative h-[420px] w-full
         rounded-2xl
-        bg-white/30
+        bg-white/30 dark:bg-zinc-900/60
         backdrop-blur-xl
-        border
-        border-white/20
+        border border-white/20 dark:border-zinc-800/60
         shadow-lg
-        transition-all
-        duration-300
-        hover:shadow-2xl
-        hover:-translate-y-1
-        flex
-        flex-col
+        transition-all duration-300
+        hover:shadow-2xl hover:-translate-y-1
+        flex flex-col
       "
     >
       {/* Glow overlay */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/30 via-transparent to-white/10 pointer-events-none" />
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/30 via-transparent to-white/10 dark:from-white/10 pointer-events-none" />
 
       <div className="relative p-4 flex flex-col h-full">
         {/* Wishlist */}
-        <button className="absolute top-3 right-3 rounded-full bg-white/50 backdrop-blur-md p-1.5 shadow">
-          <Heart size={16} className="text-gray-600 hover:text-red-500" />
+        <button className="absolute top-3 right-3 rounded-full bg-white/60 dark:bg-zinc-800/70 backdrop-blur-md p-1.5 shadow">
+          <Heart
+            size={16}
+            className="text-gray-600 dark:text-zinc-300 hover:text-red-500"
+          />
         </button>
 
-        {/* Image (fixed height) */}
+        {/* Image */}
         <div className="flex justify-center items-center h-[180px] mb-3">
           <img
             src={product.image || "/placeholder-phone.png"}
@@ -83,13 +81,13 @@ export default function ProductCard({ product }: { product: Product }) {
           </span>
         )}
 
-        {/* Name (fixed height) */}
-        <h3 className="text-sm font-semibold text-gray-900 line-clamp-2 min-h-[40px]">
+        {/* Name */}
+        <h3 className="text-sm font-semibold text-gray-900 dark:text-zinc-100 line-clamp-2 min-h-[40px]">
           {product.name}
         </h3>
 
-        {/* Variant Info (fixed height) */}
-        <p className="text-xs text-gray-700 mb-2 min-h-[16px]">
+        {/* Variant Info */}
+        <p className="text-xs text-gray-700 dark:text-zinc-400 mb-2 min-h-[16px]">
           {[product.attributes?.ram, product.attributes?.storage, product.attributes?.color]
             .filter(Boolean)
             .join(" | ")}
@@ -97,11 +95,11 @@ export default function ProductCard({ product }: { product: Product }) {
 
         {/* Price */}
         <div className="flex items-center gap-2 mb-2">
-          <span className="text-lg font-bold text-gray-900">
+          <span className="text-lg font-bold text-gray-900 dark:text-white">
             ₹{product.price.toLocaleString()}
           </span>
           {product.mrp && product.mrp > product.price && (
-            <span className="text-sm text-gray-500 line-through">
+            <span className="text-sm text-gray-500 dark:text-zinc-500 line-through">
               ₹{product.mrp.toLocaleString()}
             </span>
           )}
@@ -111,20 +109,19 @@ export default function ProductCard({ product }: { product: Product }) {
         {product.ratings && (
           <div className="flex items-center gap-1 text-sm mb-2">
             <Star size={14} className="text-yellow-500 fill-yellow-500" />
-            <span className="font-medium text-gray-800">
+            <span className="font-medium text-gray-800 dark:text-zinc-200">
               {product.ratings.average}
             </span>
-            <span className="text-gray-600">
+            <span className="text-gray-600 dark:text-zinc-400">
               ({product.ratings.count.toLocaleString()})
             </span>
           </div>
         )}
 
-        {/* Spacer pushes bottom content */}
         <div className="flex-grow" />
 
         {/* Benefits */}
-        <ul className="text-xs text-emerald-700 space-y-1">
+        <ul className="text-xs text-emerald-700 dark:text-emerald-400 space-y-1">
           {product.shipping?.freeShipping && (
             <li className="flex items-center gap-1">
               <Truck size={12} />
