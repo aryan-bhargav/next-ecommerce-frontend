@@ -50,9 +50,9 @@ export default function Navbar() {
           const data = await res.json();
           const pin = data.address?.postcode;
           if (pin) resolveFromPincode(pin);
-        } catch {}
+        } catch { }
       },
-      () => {},
+      () => { },
       { enableHighAccuracy: true }
     );
   }
@@ -93,103 +93,92 @@ export default function Navbar() {
     <header className="w-full">
 
       {/* ================= FIRST BAR ================= */}
-      <div
-        className="
-          sticky top-0 z-50
-          bg-[#0c5f84]/40 dark:bg-zinc-950/70
-          backdrop-blur-2xl
-          border-b border-white/20 dark:border-zinc-800/60
-          shadow-[0_8px_32px_rgba(31,38,135,0.37)]
-          dark:shadow-[0_8px_32px_rgba(0,0,0,0.6)]
-          text-white
-        "
-      >
-        <div className="max-w-7xl mx-auto flex items-center gap-4 px-4 py-3">
+      <div className="sticky top-0 z-50 bg-[#0c5f84]/40 backdrop-blur-2xl border-b border-white/20 text-white">
+        <div className="max-w-7xl mx-auto px-4 py-3">
 
-          <Link href="/" className="flex items-center gap-2 font-bold text-xl">
-            <img width="100" src="/Logo.png" alt="Logo" />
-          </Link>
+          {/* ROW 1 */}
+          <div className="flex items-center gap-3 flex-wrap md:flex-nowrap">
 
-          <div
-            className="
-              hidden md:flex justify-between rounded-full
-              bg-white/20 dark:bg-zinc-900/60
-              backdrop-blur-xl
-              border border-white/30 dark:border-zinc-800/60
-              ring-1 ring-white/50 dark:ring-zinc-700/60
-              shadow-lg
-              relative overflow-hidden
-            "
-          >
-            <button className="bg-white/80 px-12 py-1 m-2 font-black rounded-2xl text-black shadow">
-              Quick
-            </button>
-            <button className="px-12 py-1 m-2 font-black rounded-2xl text-white/90">
-              Scheduled
-            </button>
-          </div>
-
-          <div
-            className="
-              flex flex-1 items-center rounded-full px-4 py-2
-              bg-white/20 dark:bg-zinc-900/60
-              backdrop-blur-xl
-              border border-white/30 dark:border-zinc-800/60
-            "
-          >
-            <Search size={18} className="text-white/80" />
-            <input
-              type="search"
-              placeholder="Search in Quick"
-              className="
-                bg-transparent ml-2 w-full outline-none
-                placeholder:text-white/70
-                text-white
-              "
-            />
-          </div>
-
-          <div className="flex items-center gap-6">
-            <Menu />
-            <ShoppingCart />
-            <Link href="/login" className="flex items-center gap-1">
-              <User />
-              <span className="hidden md:block">Sign In</span>
+            <Link href="/" className="flex items-center gap-2 font-bold text-xl">
+              <img width="90" src="/Logo.png" alt="Logo" />
             </Link>
+
+            {/* Toggle (hidden on small) */}
+            <div className="hidden md:flex justify-between rounded-full bg-white/20 backdrop-blur-xl border border-white/30">
+              <button className="bg-white/80 px-8 py-1 m-2 font-black rounded-2xl text-black shadow">
+                Quick
+              </button>
+              <button className="px-8 py-1 m-2 font-black rounded-2xl text-white/90">
+                Scheduled
+              </button>
+            </div>
+
+            {/* Search (desktop) */}
+            <div className="hidden md:flex flex-1 items-center rounded-full px-4 py-2 bg-white/20 backdrop-blur-xl border border-white/30">
+              <Search size={18} className="text-white/80" />
+              <input
+                type="search"
+                placeholder="Search in Quick"
+                className="bg-transparent ml-2 w-full outline-none placeholder:text-white/70"
+              />
+            </div>
+
+            {/* Icons */}
+            <div className="flex items-center gap-4 ml-auto">
+              <Menu className="md:hidden" />
+              <ShoppingCart />
+              <Link href="/login" className="flex items-center gap-1">
+                <User />
+                <span className="hidden md:block">Sign In</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Search (mobile) */}
+          <div className="md:hidden mt-3">
+            <div className="flex items-center rounded-full px-4 py-2 bg-white/20 backdrop-blur-xl border border-white/30">
+              <Search size={16} />
+              <input
+                placeholder="Search in Quick"
+                className="bg-transparent ml-2 w-full outline-none text-sm"
+              />
+            </div>
           </div>
         </div>
       </div>
 
       {/* ================= SECOND BAR ================= */}
-      <div className="bg-[#083f57]/40 dark:bg-zinc-900/70 backdrop-blur-xl text-white">
-        <div className="max-w-7xl mx-auto flex items-center gap-3 px-4 py-2 text-sm">
+      <div className="bg-[#083f57]/40 backdrop-blur-xl text-white">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center gap-2 px-4 py-2 text-xs md:text-sm">
 
-          <span className="bg-white/80 dark:bg-white text-[#0c5f84] px-3 py-1 rounded-full font-semibold">
+          <span
+            className="
+    px-3 py-1 rounded-full font-semibold whitespace-nowrap
+    bg-gray-200/30
+    text-whitte
+    backdrop-blur-xl
+    border border-white/40
+    shadow-[0_8px_32px_rgba(31,38,135,0.25)]
+  "
+          >
             Delivery in 10 to 30 mins
           </span>
 
-          <span>
+
+          <span className="truncate max-w-[220px] md:max-w-none">
             Quick Delivery to: <strong>{location}</strong>
           </span>
 
           {!showInput ? (
             <button
               onClick={() => setShowInput(true)}
-              className="flex items-center gap-1 underline ml-2"
+              className="flex items-center gap-1 underline"
             >
               <MapPin size={14} />
               Change
             </button>
           ) : (
-            <div
-              className="
-                flex items-center gap-2
-                bg-white/20 dark:bg-zinc-800/60
-                backdrop-blur-xl
-                border border-white/30 dark:border-zinc-700/60
-                rounded-full px-3 py-1
-              "
-            >
+            <div className="flex items-center gap-2 bg-white/20 backdrop-blur-xl border border-white/30 rounded-full px-3 py-1">
               <input
                 ref={inputRef}
                 value={pincode}
@@ -199,30 +188,21 @@ export default function Navbar() {
                 onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
                 maxLength={6}
                 placeholder="Enter pincode"
-                className="
-                  bg-transparent outline-none text-white
-                  placeholder:text-white/70 w-32 text-sm
-                "
+                className="bg-transparent outline-none w-24 text-sm"
               />
 
               <button
                 onClick={handleSubmit}
                 disabled={pincode.length !== 6}
-                className={`px-3 py-1 rounded-full text-xs font-semibold
-                  ${
-                    pincode.length === 6
-                      ? "bg-white/80 text-[#0c5f84]"
-                      : "bg-white/30 text-white/50 cursor-not-allowed"
-                  }
-                `}
+                className={`px-3 py-1 rounded-full text-xs font-semibold ${pincode.length === 6
+                    ? "bg-white/80 text-[#0c5f84]"
+                    : "bg-white/30 text-white/50"
+                  }`}
               >
                 Apply
               </button>
 
-              <button
-                onClick={detectViaGPS}
-                className="text-white/80 hover:text-white"
-              >
+              <button onClick={detectViaGPS}>
                 <Crosshair size={16} />
               </button>
 
@@ -232,7 +212,7 @@ export default function Navbar() {
                   setPincode("");
                   setError("");
                 }}
-                className="text-white/60 text-xs"
+                className="text-xs opacity-70"
               >
                 ✕
               </button>

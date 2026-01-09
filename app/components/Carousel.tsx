@@ -51,9 +51,15 @@ export default function Carousel() {
     setIndex((index + 1) % slides.length);
 
   return (
-    <div className="w-full flex justify-center mt-8">
+    <div className="w-full flex justify-center mt-6 sm:mt-8">
       <div
-        className="w-full max-w-7xl h-[280px] rounded-2xl overflow-hidden relative transition-all duration-700"
+        className="
+        mx-3
+          w-full max-w-7xl
+          h-[180px] sm:h-[260px] md:h-[280px]
+          rounded-2xl overflow-hidden relative
+          transition-all duration-700
+        "
         style={{
           background: `linear-gradient(90deg, ${slides[index].gradient[0]}, ${slides[index].gradient[1]})`,
         }}
@@ -65,17 +71,28 @@ export default function Carousel() {
         <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-transparent opacity-40" />
 
         {/* Content */}
-        <div className="relative h-full flex items-center px-16">
-
+        <div
+          className="
+            relative h-full
+            flex flex-row sm:flex-row
+            items-center
+            justify-center sm:justify-start
+            px-4 sm:px-8 md:px-16
+            gap-4 sm:gap-8
+          "
+        >
           {/* Image Card */}
           <div
             className="
-              w-48 h-48 rounded-2xl
+            
+              w-30 h-30 sm:w-40 sm:h-40 md:w-48 md:h-48
+              rounded-2xl
               bg-white/50 dark:bg-zinc-900/50
               backdrop-blur-xl
               border border-white/40 dark:border-zinc-800/60
               shadow-lg
               flex items-center justify-center
+              shrink-0
             "
           >
             <Image
@@ -83,20 +100,20 @@ export default function Carousel() {
               alt={slides[index].title}
               width={160}
               height={160}
-              className="object-contain"
+              className="object-contain w-[70%] h-[70%]"
               priority
             />
           </div>
 
           {/* Text */}
-          <div className="ml-12 text-white">
-            <h2 className="text-xl font-semibold">
+          <div className="text-white text-center sm:text-left">
+            <h2 className="text-sm sm:text-l md:text-xl lg:text-2xl font-semibold">
               {slides[index].title}
             </h2>
-            <h1 className="text-3xl font-bold mt-1">
+            <h1 className="text-s sm:text-2xl md:text-3xl font-bold mt-1">
               {slides[index].price}
             </h1>
-            <p className="text-white/90 mt-2">
+            <p className="text-white/90 mt-1 sm:mt-2 text-xs sm:text-base">
               {slides[index].subtitle}
             </p>
           </div>
@@ -106,8 +123,9 @@ export default function Carousel() {
         <button
           onClick={prev}
           className="
-            absolute left-4 top-1/2 -translate-y-1/2
-            w-10 h-10 rounded-full
+            absolute left-1 sm:left-4 top-1/2 -translate-y-1/2
+            w-5 h-5 sm:w-10 sm:h-10
+            rounded-full
             bg-white/80 dark:bg-zinc-900/80
             backdrop-blur
             flex items-center justify-center
@@ -115,15 +133,16 @@ export default function Carousel() {
             hover:scale-105 transition
           "
         >
-          <ChevronLeft className="text-black dark:text-white" />
+          <ChevronLeft className="text-black dark:text-white w-4 h-4" />
         </button>
 
         {/* Right Arrow */}
         <button
           onClick={next}
           className="
-            absolute right-4 top-1/2 -translate-y-1/2
-            w-10 h-10 rounded-full
+            absolute right-1 sm:right-4 top-1/2 -translate-y-1/2
+            w-5 h-5 sm:w-10 sm:h-10
+            rounded-full
             bg-white/80 dark:bg-zinc-900/80
             backdrop-blur
             flex items-center justify-center
@@ -131,15 +150,15 @@ export default function Carousel() {
             hover:scale-105 transition
           "
         >
-          <ChevronRight className="text-black dark:text-white" />
+          <ChevronRight className="text-black dark:text-white w-4 h-4" />
         </button>
 
         {/* Dots */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+        <div className="absolute  bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
           {slides.map((_, i) => (
             <span
               key={i}
-              className={`h-2 rounded-full transition-all ${
+              className={`h-2 mt-5 rounded-full transition-all ${
                 i === index
                   ? "w-6 bg-black dark:bg-white"
                   : "w-2 bg-white/60 dark:bg-white/40"
