@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+
+import products from "../../public/data/all-products"
+
 import {
   Search,
   ShoppingCart,
@@ -19,8 +22,12 @@ export default function Navbar() {
   const [showInput, setShowInput] = useState(false);
   const [pincode, setPincode] = useState("");
   const [error, setError] = useState("");
+  const [inputValue, setInputValue] = useState('');
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const [suggestions, setSuggestions] = useState<typeof products>([]);
+
 
   useEffect(() => {
     if (showInput) inputRef.current?.focus();
@@ -89,6 +96,18 @@ export default function Navbar() {
     resolveFromPincode(pincode);
   }
 
+  function handleOnChange(query: string) {
+    setInputValue(query);
+
+    if (!query.trim()) {
+      setSuggestions([]);
+      return;
+    }
+
+    const filtered = products.filter((product) => product.name.toLowerCase().includes(query.trim().toLowerCase())).slice(0, 5);
+    setSuggestions(filtered);
+  }
+
   return (
     <header className="w-full">
 
@@ -118,10 +137,33 @@ export default function Navbar() {
               <Search size={18} className="text-white/80" />
               <input
                 type="search"
+                value={inputValue}
+                ref={searchInputRef}
                 placeholder="Search in Quick"
                 className="bg-transparent ml-2 w-full outline-none placeholder:text-white/70"
+                onChange={(e) => handleOnChange(e.target.value)}
               />
+              {/* here search query suggestions ui start */}
+              {suggestions.length > 0 && (
+                <div className="absolute top-full mt-2 w-full bg-white text-black rounded-xl shadow-xl overflow-hidden z-50">
+                  {suggestions.map((product) => (
+                    <Link
+                      key={product._id}
+                      href={`/p/${product.slug}`}
+                      className="block mx-2 my-1.5 px-4 py-3 rounded-xl hover:bg-gray-900 hover:text-white text-sm"
+                      onClick={() => {
+                        setInputValue("");
+                        setSuggestions([]);
+                      }}
+                    >
+                      <span >{product.name}</span> <span className="font-bold">-₹{product.mrp}</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+
             </div>
+
 
             {/* Icons */}
             <div className="flex items-center gap-4 ml-auto">
@@ -195,8 +237,8 @@ export default function Navbar() {
                 onClick={handleSubmit}
                 disabled={pincode.length !== 6}
                 className={`px-3 py-1 rounded-full text-xs font-semibold ${pincode.length === 6
-                    ? "bg-white/80 text-[#0c5f84]"
-                    : "bg-white/30 text-white/50"
+                  ? "bg-white/80 text-[#0c5f84]"
+                  : "bg-white/30 text-white/50"
                   }`}
               >
                 Apply

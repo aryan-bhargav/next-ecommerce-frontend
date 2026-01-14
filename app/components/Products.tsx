@@ -24,7 +24,6 @@ type SortOption =
   | "priceHighLow"
   | "discount";
 
-/* Label mapping */
 const sortLabelMap: Record<SortOption, string> = {
   relevance: "Relevance",
   popularity: "Popularity",
@@ -60,116 +59,54 @@ const Products = ({ category }: ProductsProps) => {
   }, [category, sortBy]);
 
   return (
-    <section className="relative">
-      {/* Header + Sort */}
+    <section>
+      {/* Header */}
       <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <p className="text-sm text-gray-600 dark:text-zinc-400">
+        <p className="text-sm text-gray-600">
           {filteredAndSortedProducts.length} items available
         </p>
 
-        {/* Sort Dropdown */}
-        <div className="flex items-center gap-3 text-sm">
-          <span className="font-medium text-gray-950 dark:text-zinc-100">
-            Sort by
-          </span>
+        {/* Sort */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="rounded-full bg-white/70 px-4 py-2 text-sm shadow">
+              Sort: {sortLabelMap[sortBy]}
+            </button>
+          </DropdownMenuTrigger>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button
-                className="
-                  flex items-center gap-2
-                  rounded-full
-                  bg-white/70 dark:bg-zinc-900/70
-                  backdrop-blur-lg
-                  border border-gray-300 dark:border-zinc-800
-                  px-5 py-2
-                  font-medium
-                  text-gray-950 dark:text-zinc-100
-                  shadow-md
-                  hover:shadow-lg
-                  hover:border-gray-400 dark:hover:border-zinc-700
-                  focus:outline-none
-                  focus:ring-2
-                  focus:ring-blue-500/40
-                  transition
-                "
+          <DropdownMenuContent align="end" className="w-56">
+            {(Object.keys(sortLabelMap) as SortOption[]).map((option) => (
+              <DropdownMenuItem
+                key={option}
+                onClick={() => setSortBy(option)}
+                className="flex justify-between"
               >
-                {sortLabelMap[sortBy]}
-                <svg
-                  className="h-4 w-4 text-gray-950 dark:text-zinc-100"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M6 9l6 6 6-6" />
-                </svg>
-              </button>
-            </DropdownMenuTrigger>
-
-            <DropdownMenuContent
-              align="end"
-              className="
-                w-56
-                bg-white dark:bg-zinc-900
-                border border-gray-200 dark:border-zinc-800
-                rounded-lg
-                shadow-lg
-                text-gray-950 dark:text-zinc-100
-              "
-            >
-              {(Object.keys(sortLabelMap) as SortOption[]).map((option) => (
-                <DropdownMenuItem
-                  key={option}
-                  onClick={() => setSortBy(option)}
-                  className="
-                    flex items-center justify-between
-                    rounded-md
-                    px-2 py-1.5
-                    cursor-pointer
-                    transition-colors duration-300
-                    hover:bg-gray-950 hover:text-white
-                    dark:hover:bg-zinc-800
-                  "
-                >
-                  <span>{sortLabelMap[option]}</span>
-
-                  {sortBy === option && (
-                    <Check className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                  )}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+                {sortLabelMap[option]}
+                {sortBy === option && <Check size={16} />}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
-      {/* Product Grid */}
+      {/* PRODUCT LIST / GRID */}
       <div
         className="
           grid
-          grid-cols-2
-          sm:grid-cols-3
-          md:grid-cols-3
+          grid-cols-1          /* 📱 mobile list */
+          sm:grid-cols-1
+          md:grid-cols-3       /* 💻 desktop grid */
           lg:grid-cols-4
-          xl:grid-cols-4
-          gap-4
-          md:gap-6
+          gap-4 md:gap-6
         "
       >
-        {filteredAndSortedProducts.map((p) => (
-          <div
-            key={p._id}
-            className="transition-transform hover:-translate-y-1"
-          >
-            <ProductCard product={p} />
-          </div>
+        {filteredAndSortedProducts.map((product) => (
+          <ProductCard key={product._id} product={product} />
         ))}
       </div>
 
-      {/* Empty State */}
       {filteredAndSortedProducts.length === 0 && (
-        <div className="mt-16 text-center text-gray-500 dark:text-zinc-400">
+        <div className="mt-16 text-center text-gray-500">
           No products found in this category.
         </div>
       )}
