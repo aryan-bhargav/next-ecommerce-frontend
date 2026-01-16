@@ -14,25 +14,61 @@ import {
   Crosshair,
 } from "lucide-react";
 
+
 const CACHE_KEY = "delivery_location_v4";
 const CACHE_TIME = 24 * 60 * 60 * 1000;
 
+type Product = (typeof products)[number];
+type SearchCache = Record<string, Product[]>;
+
 export default function Navbar() {
+  /* ===================== STATE ===================== */
   const [location, setLocation] = useState("Detecting location...");
   const [showInput, setShowInput] = useState(false);
   const [pincode, setPincode] = useState("");
   const [error, setError] = useState("");
-  const [inputValue, setInputValue] = useState('');
+  const [mode, setMode] = useState<"quick" | "scheduled">("quick");
+
+  const [inputValue, setInputValue] = useState("");
+  const [suggestions, setSuggestions] = useState<Product[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [cache, setCache] = useState<SearchCache>({});
 
   const inputRef = useRef<HTMLInputElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const [suggestions, setSuggestions] = useState<typeof products>([]);
 
+  /* ===================== SEARCH ===================== */
+  useEffect(() => {
+    if (!inputValue.trim()) {
+      setSuggestions([]);
+      return;
+    }
 
+    const timer = setTimeout(() => {
+      if (cache[inputValue]) {
+        setSuggestions(cache[inputValue]);
+        return;
+      }
+
+      const filtered = products
+        .filter((p) =>
+          p.name.toLowerCase().includes(inputValue.toLowerCase())
+        )
+        .slice(0, 5);
+
+      setSuggestions(filtered);
+      setCache((prev) => ({ ...prev, [inputValue]: filtered }));
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [inputValue, cache]);
+
+  /* ===================== PIN INPUT FOCUS ===================== */
   useEffect(() => {
     if (showInput) inputRef.current?.focus();
   }, [showInput]);
 
+  /* ===================== LOCATION CACHE ===================== */
   useEffect(() => {
     const cached = localStorage.getItem(CACHE_KEY);
     if (cached) {
@@ -45,28 +81,50 @@ export default function Navbar() {
     detectViaGPS();
   }, []);
 
+  /* ===================== GPS ===================== */
   function detectViaGPS() {
-    if (!navigator.geolocation) return;
+    if (!navigator.geolocation) {
+      fallbackToManual();
+      return;
+    }
 
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
         try {
           const res = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`,
+            {
+              headers: {
+                "User-Agent": "quick-commerce-app/1.0",
+              },
+            }
           );
+
           const data = await res.json();
           const pin = data.address?.postcode;
+
           if (pin) resolveFromPincode(pin);
-        } catch { }
+          else fallbackToManual();
+        } catch {
+          fallbackToManual();
+        }
       },
-      () => { },
+      fallbackToManual,
       { enableHighAccuracy: true }
     );
   }
 
+  function fallbackToManual() {
+    setLocation("Enter pincode");
+    setShowInput(true);
+  }
+
+  /* ===================== PINCODE ===================== */
   async function resolveFromPincode(pin: string) {
     try {
-      const res = await fetch(`https://api.postalpincode.in/pincode/${pin}`);
+      const res = await fetch(
+        `https://api.postalpincode.in/pincode/${pin}`
+      );
       const data = await res.json();
       const po = data?.[0]?.PostOffice?.[0];
 
@@ -92,78 +150,102 @@ export default function Navbar() {
   }
 
   function handleSubmit() {
-    if (pincode.length !== 6) return;
-    resolveFromPincode(pincode);
-  }
-
-  function handleOnChange(query: string) {
-    setInputValue(query);
-
-    if (!query.trim()) {
-      setSuggestions([]);
-      return;
-    }
-
-    const filtered = products.filter((product) => product.name.toLowerCase().includes(query.trim().toLowerCase())).slice(0, 5);
-    setSuggestions(filtered);
+    if (pincode.length === 6) resolveFromPincode(pincode);
   }
 
   return (
     <header className="w-full">
-
       {/* ================= FIRST BAR ================= */}
-      <div className="sticky top-0 z-50 bg-[#0c5f84]/40 backdrop-blur-2xl border-b border-white/20 text-white">
+      <div className="sticky w-full top-0 z-50 bg-[#0c5f84]/40 backdrop-blur-2xl border-b border-white/20 text-white">
         <div className="max-w-7xl mx-auto px-4 py-3">
-
-          {/* ROW 1 */}
           <div className="flex items-center gap-3 flex-wrap md:flex-nowrap">
-
             <Link href="/" className="flex items-center gap-2 font-bold text-xl">
               <img width="90" src="/Logo.png" alt="Logo" />
             </Link>
 
             {/* Toggle (hidden on small) */}
-            <div className="hidden md:flex justify-between rounded-full bg-white/20 backdrop-blur-xl border border-white/30">
-              <button className="bg-white/80 px-8 py-1 m-2 font-black rounded-2xl text-black shadow">
+            <div className="hidden md:flex relative justify-between rounded-full bg-white/20 backdrop-blur-xl border border-white/30 w-[260px]">
+              {/* Sliding pill */}
+              <div
+                className={` absolute top-2 bottom-2 w-30 bg-white/80 rounded-2xl shadow transition-transform duration-300 ease-out ${mode === "quick" ? "translate-x-2" : "translate-x-33"}
+    `}
+              />
+
+              {/* Quick */}
+              <button
+                onClick={() => setMode("quick")}
+                className={`relative z-10 px-8 py-1 m-2 rounded-2xl transition-colors ${mode === "quick" ? "text-black font-black" : "text-white/90 font-medium"}
+    `}
+              >
                 Quick
               </button>
-              <button className="px-8 py-1 m-2 font-black rounded-2xl text-white/90">
+
+              {/* Scheduled */}
+              <button
+                onClick={() => setMode("scheduled")}
+                className={`relative z-10 px-8 py-1 m-2 font-black rounded-2xl transition-colors ${mode === "scheduled" ? "text-black font-black" : "text-white/90 font-medium"}
+    `}
+              >
                 Scheduled
               </button>
             </div>
 
+
             {/* Search (desktop) */}
-            <div className="hidden md:flex flex-1 items-center rounded-full px-4 py-2 bg-white/20 backdrop-blur-xl border border-white/30">
-              <Search size={18} className="text-white/80" />
+            <div className="hidden md:flex relative flex-1 items-center rounded-full px-4 py-2 bg-white/20 backdrop-blur-xl border border-white/30">
+              <Search size={18} />
               <input
-                type="search"
-                value={inputValue}
                 ref={searchInputRef}
+                type="search"
+                value={inputValue ?? ""}
                 placeholder="Search in Quick"
-                className="bg-transparent ml-2 w-full outline-none placeholder:text-white/70"
-                onChange={(e) => handleOnChange(e.target.value)}
+                className="bg-transparent ml-2 w-full outline-none"
+                onChange={(e) => setInputValue(e.target.value)}
+                onFocus={() => setShowSuggestions(true)}
+                onBlur={() =>
+                  setTimeout(() => setShowSuggestions(false), 150)
+                }
               />
-              {/* here search query suggestions ui start */}
-              {suggestions.length > 0 && (
-                <div className="absolute top-full mt-2 w-full bg-white text-black rounded-xl shadow-xl overflow-hidden z-50">
-                  {suggestions.map((product) => (
-                    <Link
+
+              {showSuggestions && suggestions.length > 0 && (
+                <div className="absolute top-full mt-2 w-full bg-white text-black rounded-xl shadow-xl z-50 overflow-hidden">
+                  {suggestions.map((product, index) => (
+                    <div
                       key={product._id}
-                      href={`/p/${product.slug}`}
-                      className="block mx-2 my-1.5 px-4 py-3 rounded-xl hover:bg-gray-900 hover:text-white text-sm"
-                      onClick={() => {
-                        setInputValue("");
-                        setSuggestions([]);
-                      }}
+                      className="group"
                     >
-                      <span >{product.name}</span> <span className="font-bold">-₹{product.mrp}</span>
-                    </Link>
+                      <Link
+                        href={`/p/${product.slug}`}
+                        className="block px-4 py-3 text-sm transition-colors duration-200
+                   hover:bg-gray-900 hover:text-white"
+                        onMouseDown={() => {
+                          setInputValue("");
+                          setSuggestions([]);
+                        }}
+                      >
+                        {product.name} <strong>₹{product.mrp}</strong>
+                      </Link>
+
+                      {/* Animated Divider */}
+                      {index !== suggestions.length - 1 && (
+                        <div
+                          className="
+            h-px mx-4
+            bg-gray-200
+            transition-all duration-300 ease-out
+            opacity-100 scale-x-100
+            group-hover:opacity-0
+            group-hover:scale-x-0
+            origin-left
+          "
+                        />
+                      )}
+                    </div>
                   ))}
                 </div>
+
               )}
-
             </div>
-
 
             {/* Icons */}
             <div className="flex items-center gap-4 ml-auto">
@@ -177,14 +259,54 @@ export default function Navbar() {
           </div>
 
           {/* Search (mobile) */}
-          <div className="md:hidden mt-3">
-            <div className="flex items-center rounded-full px-4 py-2 bg-white/20 backdrop-blur-xl border border-white/30">
+          <div className="md:hidden mt-3 relative">
+            <div className="flex items-center rounded-full px-4 py-2 bg-white/20 border border-white/30">
               <Search size={16} />
               <input
-                placeholder="Search in Quick"
+                value={inputValue ?? ""}
+
+                onChange={(e) => setInputValue(e.target.value)}
+                onFocus={() => setShowSuggestions(true)}
+                onBlur={() => setShowSuggestions(false)}
                 className="bg-transparent ml-2 w-full outline-none text-sm"
+                placeholder="Search in Quick"
               />
             </div>
+
+            {showSuggestions && suggestions.length > 0 && (
+              <div className="absolute mt-2 w-full bg-white text-black rounded-xl shadow-xl z-50 overflow-hidden">
+                {suggestions.map((product, index) => (
+                  <div key={product._id} className="group">
+                    <Link
+                      href={`/p/${product.slug}`}
+                      className="block px-4 py-3 text-sm transition-colors duration-200
+                   hover:bg-gray-900 hover:text-white"
+                      onMouseDown={() => {
+                        setInputValue("");
+                        setSuggestions([]);
+                      }}
+                    >
+                      {product.name} <strong>₹{product.mrp}</strong>
+                    </Link>
+
+                    {index !== suggestions.length - 1 && (
+                      <div
+                        className="
+            h-px mx-4
+            bg-gray-200
+            transition-all duration-300 ease-out
+            opacity-100 scale-x-100
+            group-hover:opacity-0
+            group-hover:scale-x-0
+            origin-left
+          "
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+
+            )}
           </div>
         </div>
       </div>
@@ -223,7 +345,8 @@ export default function Navbar() {
             <div className="flex items-center gap-2 bg-white/20 backdrop-blur-xl border border-white/30 rounded-full px-3 py-1">
               <input
                 ref={inputRef}
-                value={pincode}
+                value={pincode ?? ""}
+
                 onChange={(e) =>
                   setPincode(e.target.value.replace(/\D/g, ""))
                 }
